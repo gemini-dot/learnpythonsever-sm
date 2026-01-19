@@ -2,13 +2,25 @@ import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import sys
-load_dotenv() # Để đọc link database từ file .env
+from backend.logs.logger import logger
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+load_dotenv(dotenv_path=env_path, override=True)
 
 def get_database():
     uri = os.getenv("MONGO_URI")
     if not uri:
-        print("lỗi rồi bạn ơi, cái chỗ mà nhập .env á(configs/db.py)")
-        sys.exit(5)
-    client = MongoClient(uri)
-    return client["ten_database_cua_ong"]
+        logger.error("system: not found file .env")
+        sys.exit(1)
+        
+    try:
+        client = MongoClient(uri)
+        # Kiểm tra thử xem có connect được thật không
+        client.admin.command('ping') 
+        return client["myDatabase"]
+    except Exception as e:
+        logger.error(f"system: connet error {e}")
+        sys.exit(1)
+
 db = get_database()
