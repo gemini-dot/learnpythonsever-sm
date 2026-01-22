@@ -11,7 +11,7 @@ function terminal_style_log() {
 
   setTimeout(() => {
     console.log("%c[ALERT]: %cNGUY HIỂM! KHÔNG ĐƯỢC DÁN CODE LẠ!", red, "color: #ff3333;");
-    console.log("%c>> %cTerminal đang được giám sát chặt chẽ.", "color: gray;", "color: gray; font-style: italic;");
+    console.log("%c>> %cTính năng này chỉ dàng riêng cho developer. web make by sam", "color: gray;", "color: gray; font-style: italic;");
   }, 1000);
 }
 
