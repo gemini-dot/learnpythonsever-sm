@@ -16,41 +16,41 @@
             </div>
             <h1>Chào mừng trở lại</h1>
             <p class="subtitle">Đăng nhập để tiếp tục</p>
-            
-            <div class="form-container">
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="example@email.com" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="password">Mật khẩu</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password" placeholder="Nhập mật khẩu của bạn" required>
-                        <button id="buttonpass" type="button" class="toggle-password" onclick="an_hienpassbutton()">
-                            <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
+            <form id="dang-nhap" class="form-container">
+                <div class="form-container">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="example@email.com" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">Mật khẩu</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="Nhập mật khẩu của bạn" required>
+                            <button id="buttonpass" type="button" class="toggle-password" onclick="an_hienpassbutton()">
+                                <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>Ghi nhớ đăng nhập</span>
+                        </label>
+                        <a onclick="goto2()" href="#" class="forgot-password">Quên mật khẩu?</a>
+                    </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span>Đăng nhập</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
                         </button>
-                    </div>
-                </div>
-                
-                <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox" id="remember">
-                        <span>Ghi nhớ đăng nhập</span>
-                    </label>
-                    <a onclick="goto2()" href="#" class="forgot-password">Quên mật khẩu?</a>
-                </div>
-                <form id="dang-nhap">
-                    <button type="submit" class="submit-btn">
-                        <span>Đăng nhập</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
                 </form>
                 <div class="divider">
                     <span>hoặc</span>
