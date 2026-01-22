@@ -15,6 +15,8 @@ buttonpass.addEventListener('submit', function(event) {
         "password": lay_gia_tri_pass    
     };
 
+    console.log("Đang gửi dữ liệu:", goi_du_lieu);
+    
     fetch("https://learnpythonsever-sm.onrender.com/auth/input-pass", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
