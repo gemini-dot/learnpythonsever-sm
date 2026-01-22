@@ -6,54 +6,68 @@ from utils.hash_password import hash_password,make_salt
 from utils.create_number import goi_y_username
 import sys
 from flask import jsonify
-def kiem_tra_mat_khau(gmail_input, password_input):
+
+def kiem_tra_mat_khau(user_name_input ,gmail_input, password_input):
+    
     luu_tru = db['users']
+    
     try:
         db.command('ping')
         logger.info("system: find to connect mongodb ")
     except Exception as e:
         logger.error(f"system: error connect {e}")
-        sys.exit(1)
-    if luu_tru.find_one({"gmail":gmail_input}):
-        logger.warning("tài khoản đã tồn tại trong hệ thống")
+    # 1. Kiểm tra email tồn tại
+    if luu_tru.find_one({"gmail": gmail_input}):
+        logger.warning(f"Email {gmail_input} đã tồn tại.")
         goi_y = goi_y_username(gmail_input.split('@')[0])
-        return {"status": "error", "message": "Trùng rồi", "error_type": "loi_trung_email","suggestion": goi_y}
-    username = gmail_input
-    password = password_input
-    is_valid, message = check_password_strength(password)
-    if kiem_tra_dinh_dang_gmail(username):
-        if is_valid:
-            salt = make_salt()
-            hashed = hash_password(password, salt)
-            user_data = {
-                "username": username,
-                "password": hashed,
-                "salt": salt,
-                "role": "user"
-            }
-            try:
-                luu_tru.insert_one(user_data)
-                return {
-                    "status": "good",
-                    "message": "lưu vào database rồi bạn ơi!"
-                },201
-            except Exception as e:
-                logger.error(f"lỗi khi lưu vào mongobd {e}")
-                return {
-                    "status": "error",
-                    "error_type": "loi_luu_tru_database",
-                    "message": "lỗi khi lưu vào database rồi bạn ơi!"
-                }
-        else:
-            return {
-                "status": "error",
-                "error_type": "loi_do_manh_pass",
-                "message": message
-            },400
-    else:
         return {
-            "status": "error",
-            "error_type": "loi_dinh_dang_gmail",
-            "message": "định dạng gmail này chưa đúng rồi bạn ơi!"
+            "status": "error", 
+            "error_type": "loi_trung_email", 
+            "message": "Email này đã được sử dụng rồi!",
+            "suggestion": goi_y
         }
 
+    # 2. Kiểm tra định dạng Gmail trước
+    if not kiem_tra_dinh_dang_gmail(gmail_input):
+        return {
+            "status": "error", 
+            "error_type": "loi_dinh_dang_gmail",
+            "message": "Định dạng Gmail không hợp lệ!"
+        }
+
+    # 3. Kiểm tra độ mạnh mật khẩu
+    is_valid, message = check_password_strength(password_input)
+
+    if not is_valid:
+        return {
+            "status": "error", 
+            "error_type": "loi_do_manh_pass", 
+            "message": message
+        }
+
+    
+    try:
+        salt = make_salt()
+        hashed = hash_password(password_input, salt)
+        
+        user_data = {
+            "username": user_name_input,
+            "gmail": gmail_input,
+            "password": hashed,
+            "salt": salt,
+            "role": "user"
+        }
+        
+        luu_tru.insert_one(user_data)
+
+        return {
+            "status": "good", 
+            "message": "Tạo tài khoản thành công rồi nhé!"
+        }
+    except Exception as e:
+        logger.error(f"Lỗi database: {e}")
+        return {
+            "status": "error", 
+            "error_type": "loi_luu_tru_database", 
+            "message": "Lỗi hệ thống, vui lòng thử lại sau!"
+        }

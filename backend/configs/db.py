@@ -13,14 +13,19 @@ def get_database():
     if not uri:
         logger.error("system: not found file .env")
         sys.exit(1)
-        
     try:
         client = MongoClient(uri)
-        # Kiểm tra thử xem có connect được thật không
         client.admin.command('ping') 
+        print("kết nối được òi")
         return client["myDatabase"]
     except Exception as e:
         logger.error(f"system: connet error {e}")
-        sys.exit(1)
 
 db = get_database()
+
+if db is not None:
+        try:
+            db['users'].drop_index("key_1")
+            print("Đã xóa Index lỗi 'key_1' thành công!")
+        except Exception as e:
+            pass
