@@ -12,7 +12,9 @@ app_route3 = Blueprint("auth_xac_thuc_mk", __name__)
 def xac_thuc():
     gmail = request.args.get('gmail')
     token = request.args.get('token')
+
     kiem_tra = kiem_tra_xac_nhan(gmail,token)
+    
     if kiem_tra["success"]:
         return jsonify(kiem_tra),200
     return jsonify(kiem_tra), 400
