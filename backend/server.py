@@ -43,3 +43,9 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=port)
     except Exception as e:
         logger.error(f"System: Lỗi khởi động: {e}")
+
+#hỡi người anh em
+#nếu bro gặp lỗi và đang cố gắng fix lỗi(90% là vậy)
+#thì xin lỗi...
+#chỉ có chúa với tui là hiểu nó chạy thế nào
+#và giờ chỉ còn chúa thôi
