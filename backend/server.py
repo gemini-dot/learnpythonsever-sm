@@ -1,14 +1,19 @@
 from flask import Flask
 from flask_cors import CORS
+import os
+import sys
+import io
+import signal
+from flask import jsonify
+import time
+#import file nội bộ
 from configs.db import db
 from routes.group_password.input_pass import app_route
 from routes.group_password.create_a_password import app_route2
 from logs.logger import logger
 from routes.group_password.forgot_password import app_route4
 from routes.group_password.forgot_pass2 import app_route3
-import os
-import sys
-import io
+
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -17,8 +22,31 @@ CORS(app)
 
 app.register_blueprint(app_route, url_prefix='/auth')
 app.register_blueprint(app_route2, url_prefix='/auth')
-app.register_blueprint(app_route4,url_prefix='/auth')
 app.register_blueprint(app_route3,url_prefix='/auth')
+app.register_blueprint(app_route4,url_prefix='/auth')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return {"error": "Đường dẫn này không tồn tại rồi bạn ơi!"}, 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return {"error": "Server đang bị 'hắt hơi sổ mũi', đợi xíu nhé!"}, 500
+
+@app.route('/dark-magic/<key>')
+def self_destruct(key):
+    if key == os.getenv("keykill"): 
+        print("CẢNH BÁO: Lệnh tự hủy đã được xác nhận!")
+        def shutdown():
+            time.sleep(1)
+            os.kill(os.getpid(), signal.SIGINT)
+            
+        import threading
+        threading.Thread(target=shutdown).start()
+        
+        return jsonify({"status": "Boom!", "message": "Server đang sập..."}), 200
+    
+    return jsonify({"status": "Failed", "message": "Tuổi gì mà đòi phá server này!"}), 403
 
 @app.route('/')
 def home():
