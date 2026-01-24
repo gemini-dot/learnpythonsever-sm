@@ -19,6 +19,11 @@ def kiem_tra_xac_nhan(gmail, token_nguoi_dung_gui_len):
 
         thoi_gian_tao_token = ban_ghi.get("thoi_gian_tao")
         thoi_gian_het_han = ban_ghi.get("thoi_gian_het_han")
+        da_su_dung = ban_ghi.get("trang_thai1")
+
+        if da_su_dung == "da_su_dung":
+            return {"success": False, "message": "Mã xác thực đã được sử dụng!"}
+        
         thoi_gian_hien_tai = int(time())
 
         kiem_tra_token_het_han = kiem_tra_het_han_token(gmail, thoi_gian_tao_token, thoi_gian_hien_tai, thoi_gian_het_han)
