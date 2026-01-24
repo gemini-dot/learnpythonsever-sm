@@ -22,7 +22,7 @@ def gui_mail_reset(email_nguoi_nhan, token):
                 'LINK_RESET': link_reset
             }
         }
-
+        #
         response = requests.post(url, json=data)
         
         if response.status_code == 200:
