@@ -16,9 +16,9 @@ async function verifyToken() {
 
     try {
         const response = await fetch(`https://learnpythonsever-sm.onrender.com/auth/tim-mat-khau2?gmail=${gmail}&token=${token}`, {
-            method: 'GET'
+            method: 'GET' 
         });
-
+        //
         const data = await response.json();
 
         if (response.ok && data.success) {
