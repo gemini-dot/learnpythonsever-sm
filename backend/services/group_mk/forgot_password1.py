@@ -3,6 +3,7 @@ from configs.db import db
 from utils.make_token import tao_token_10_so
 from logs.logger import logger
 from time import time
+from flask import request
 
 def kiem_tra_dat_lai_mat_khau(gmail):
 
@@ -37,8 +38,11 @@ def kiem_tra_dat_lai_mat_khau(gmail):
         
         cho_luu_token.update_one(dieu_kien, noi_dung_thay_doi,upsert=True)
 
-        ket_qua = gui_mail_reset(gmail, tao_token)
-        
+        ip_nguoi_dung = request.remote_addr
+        user_agent = request.headers.get('User-Agent')
+
+        ket_qua = gui_mail_reset(gmail, tao_token, thoi_gian_tao, ip_nguoi_dung, user_agent)
+
         if ket_qua['success']:
             return {"success": True, "message": "Đã gửi email thành công! Vui lòng kiểm tra hộp thư."}
         else:
