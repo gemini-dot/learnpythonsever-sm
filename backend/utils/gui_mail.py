@@ -25,6 +25,8 @@ def gui_mail_reset(email_nguoi_nhan, token):
         #
         response = requests.post(url, json=data)
         
+        print(f"EmailJS Response: {response.status_code} - {response.text}")
+
         if response.status_code == 200:
             print(f"Gửi mail cho {email_nguoi_nhan} thành công rồi og ơi! 🎉")
             return {"success": True}
