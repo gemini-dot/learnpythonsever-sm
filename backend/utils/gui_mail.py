@@ -2,6 +2,7 @@ import os
 import requests
 from pathlib import Path
 from utils.tinh_thoi_gian import thoi_gian_tuong_doi
+from datetime import datetime
 
 def gui_mail_reset(email_nguoi_nhan, token, thoi_gian, dia_chi_ip, thiet_bi):
 
@@ -15,7 +16,11 @@ def gui_mail_reset(email_nguoi_nhan, token, thoi_gian, dia_chi_ip, thiet_bi):
     try:
         url = "https://api.emailjs.com/api/v1.0/email/send"
 
-        thoi_gian = thoi_gian_tuong_doi(thoi_gian)
+        if isinstance(thoi_gian, int):
+            thoi_gian_obj = datetime.fromtimestamp(thoi_gian)
+            thoi_gian = thoi_gian_tuong_doi(thoi_gian_obj)
+        else:
+            thoi_gian = thoi_gian_tuong_doi(thoi_gian)
 
         data = {
             'service_id': service_id,
