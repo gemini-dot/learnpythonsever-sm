@@ -3,9 +3,12 @@ import { showToast } from '../../popup/popup.js';
 const form = document.getElementById('forgotPasswordForm');
 const emailInput = document.getElementById('email');
 
+let time = 300;
+
 form.addEventListener('submit', async function(event) {
     event.preventDefault(); 
 
+    let isSuccess = false;
     const emailValue = emailInput.value.trim();
 
     if (!emailValue) {
@@ -30,9 +33,25 @@ form.addEventListener('submit', async function(event) {
         const data = await response.json();
 
         if (response.ok) {
+
+            isSuccess = true;
             console.log("Status code nè bạn:", response.status);
             console.log("Server bảo: " + data.message);
             document.getElementById('successModal').style.display = 'flex';
+
+            submitBtn.disabled = true;
+            let timeLeft = time;
+            const timer = setInterval(() => {
+                timeLeft--;
+                submitBtn.innerText = `Chờ (${timeLeft}s)`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                }
+            }, 1000);
+            return;
         } else {
             showToast('error', "Lỗi: " + (data.message || "Có gì đó sai sai rồi og ơi!"));
         }
@@ -40,9 +59,12 @@ form.addEventListener('submit', async function(event) {
     } catch (error) {
         console.error("Lỗi kết nối:", error);
         showToast('error', "Không kết nối được với server rồi!");
+        
     } finally {
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.disabled = false;
+        if (!isSuccess) {
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
     }
 });
 
