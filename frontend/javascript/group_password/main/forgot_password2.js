@@ -19,7 +19,7 @@ async function verifyToken() {
         // 2. Gọi API xác thực (Bước 2 của og)
         // URL sẽ có dạng: /auth/tim-mat-khau2?gmail=...&token=...
         const response = await fetch(`https://learnpythonsever-sm.onrender.com/auth/tim-mat-khau2?gmail=${gmail}&token=${token}`, {
-            method: 'GET'
+            method: 'POST'
         });
 
         const data = await response.json();
