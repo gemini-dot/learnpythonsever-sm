@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
-from middleware.rate_limiting import limit_requests
-from services.group_mk.forgot_password2 import kiem_tra_xac_nhan
-from middleware.rate_limiting import limit_requests
+from flask import Blueprint
 from flask_cors import CORS, cross_origin
+#import nội bộ
+from controllers.group_password.forget_password2 import xac_thuc
+from middleware.rate_limiting import limit_requests
+
 
 app_route3 = Blueprint("auth_xac_thuc_mk", __name__)
 CORS(app_route3)
@@ -12,12 +13,5 @@ CORS(app_route3)
 
 @limit_requests(max_requests=5,period=60)
 
-def xac_thuc():
-    gmail = request.args.get('gmail')
-    token = request.args.get('token')
-
-    kiem_tra = kiem_tra_xac_nhan(gmail,token)
-    
-    if kiem_tra["success"]:
-        return jsonify(kiem_tra),200
-    return jsonify(kiem_tra), 400
+def tim_mat_khau2():
+    return xac_thuc()
