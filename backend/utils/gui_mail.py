@@ -5,9 +5,9 @@ from pathlib import Path
 def gui_mail_reset(email_nguoi_nhan, token):
     # 1. Lấy cấu hình từ biến môi trường (Environment trên Render)
     # Với EmailJS, og cần các ID này thay vì email/pass thông thường
-    service_id = os.getenv("EMAILJS_SERVICE_ID")
-    template_id = os.getenv("EMAILJS_TEMPLATE_ID")
-    public_key = os.getenv("EMAILJS_PUBLIC_KEY")
+    service_id = "service_xszjius"
+    template_id = "template_h6t8562"
+    public_key = "Z2nHUm0dY8tFSWlaB"
 
     # 2. Tạo link reset
     link_reset = f"https://gemini-dot.github.io/learnpythonsever-sm/frontend/view/group_password/forgot_password.html?gmail={email_nguoi_nhan}&token={token}"
