@@ -20,6 +20,7 @@ form.addEventListener('submit', async function(event) {
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.innerText = "Đang gửi...";
     submitBtn.disabled = true;
+    showToast('info','Đang gửi yêu cầu...');
 
     try {
         const response = await fetch('https://learnpythonsever-sm.onrender.com/auth/tim-mat-khau1', {

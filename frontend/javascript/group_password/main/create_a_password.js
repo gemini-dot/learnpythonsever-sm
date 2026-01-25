@@ -42,6 +42,7 @@ function handleSignup(event) {
         password: password,
     };
 
+    showToast('info', 'Đang gửi yêu cầu...');
     console.log("Đang gửi dữ liệu:", goi_du_lieu);
 
     fetch('https://learnpythonsever-sm.onrender.com/auth/create-a-pass', {

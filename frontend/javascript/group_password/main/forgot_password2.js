@@ -19,7 +19,7 @@ async function verifyToken() {
         showToast('error', 'Liên kết không hợp lệ.');
         return;
     }
-
+    showToast('info', 'Đang xác thực liên kết...');
     try {
         const response = await fetch(`https://learnpythonsever-sm.onrender.com/auth/tim-mat-khau2?gmail=${gmail}&token=${token}`, {
             method: 'GET' 

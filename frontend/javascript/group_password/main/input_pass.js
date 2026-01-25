@@ -10,6 +10,8 @@ if (formDangNhap) {
         // Chặn hành động reload mặc định của form
         event.preventDefault();
 
+        showToast('info', 'Đang gửi xác thực...');
+
         const lay_gia_tri_pass = userpass.value;
         const lay_gia_tri_user = useremail.value;
 
@@ -17,7 +19,7 @@ if (formDangNhap) {
             "gmail": lay_gia_tri_user,
             "password": lay_gia_tri_pass    
         };
-
+        
         console.log("Đang gửi dữ liệu:", goi_du_lieu);
         
         fetch("https://learnpythonsever-sm.onrender.com/auth/input-pass", {
